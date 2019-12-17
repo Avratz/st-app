@@ -1,8 +1,9 @@
 import React from 'react'
 
-import './login-form.style.scss'
+import './login-form.styles.scss'
 
 import FormInput from '../form-input/form-input.component'
+import CustomButton from '../custom-button/custom-button.component'
 
 class LoginForm extends React.Component {
     constructor(){
@@ -47,7 +48,7 @@ class LoginForm extends React.Component {
                     handleChange={this.handleChange}  
                     required />
 
-                <button type="submmit">Iniciar sesion</button>
+                <CustomButton type="submmit">Iniciar sesion</CustomButton>
             </form>
         )
     }
