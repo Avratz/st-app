@@ -1,0 +1,26 @@
+const menuItems = [
+	{
+		category: 'arquitectos',
+		imgUrl:
+			'https://microjurisar.files.wordpress.com/2015/03/shutterstock_126803474.jpg'
+	},
+	{
+		category: 'balance',
+		imgUrl:
+			'http://contadoresperu.net/wp-content/uploads/2017/03/libors-contable-que-libros-contable-debo-llevar-en-el-regimen-mype-2017-sunat.jpg'
+	},
+	{
+		category: 'catalogo',
+		imgUrl: 'https://www.degacor.com/images/570x510productos/64775.jpg'
+	},
+	{
+		category: 'clientes',
+		imgUrl:
+			'https://i.channeldailynews.com/wp-content/uploads/2019/11/y745huijrw.jpg'
+	},
+	{
+		category: 'clientes',
+		imgUrl:
+			'https://i.channeldailynews.com/wp-content/uploads/2019/11/y745huijrw.jpg'
+	}
+]
