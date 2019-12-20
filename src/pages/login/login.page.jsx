@@ -7,7 +7,7 @@ import LoginForm from '../../components/login/login-form.component'
 export default function LoginPage() {
     return(
         <div className='login-page'>
-            <h1>Inicia sesion</h1>
+            <h2 className='st-h2'>Inicia sesion</h2>
             <LoginForm />
         </div>
     )
