@@ -9,7 +9,7 @@ export default class PresupuestoPage extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			presupuestos: [{ title: '' }],
+			presupuestos: [{ title: '', description: '' }],
 		}
 	}
 
@@ -28,15 +28,32 @@ export default class PresupuestoPage extends React.Component {
 
 
 	render() {
+		const tableHeader = [
+			{
+				abbr: 'Pos',
+				title: 'Posicion'
+			},
+			{
+				abbr: '',
+				title: 'Titulo'
+			},
+			{
+				abbr: '',
+				title: 'Cliente'
+			},
+			{
+				title: 'Monto'
+			}
+		]
         return (
 			<div className="presupuesto-page container">
-				<div className="columns">
-					<h2 className="column is-size-2">Presupuesto page</h2>
+				<div className="columns is-vcentered">
+					<h2 className="column is-size-2">Ultimos presupuestos</h2>
 					<div className="column is-2 has-text-right">
 						<button className="button is-primary is-small" onClick={this.handleToggle}>NUEVO PRESUPUESTO</button>
 					</div>
 				</div>
-				<HorizontalList />
+				<HorizontalList data={this.state.presupuestos} tableHeader={tableHeader} tableContent={this.state.presupuestos}/>
                 
 			</div>
 		)

@@ -1,4 +1,8 @@
 .menu-list {
 	display: flex;
 	flex-wrap: wrap;
+	a{
+		display: flex;
+		width: 25%;
+	}
 }

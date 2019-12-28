@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import './menu-list.styles.scss'
 
@@ -67,7 +68,7 @@ export default function MenuList() {
 	return (
 		<div className="menu-list">
 			{menuItems.map(item => {
-				return <MenuItem imgUrl={item.imgUrl}>{item.category}</MenuItem>
+                return <Link to={item.category}><MenuItem imgUrl={item.imgUrl}>{item.category}</MenuItem></Link>
 			})}
 		</div>
 	)
