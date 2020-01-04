@@ -3,13 +3,18 @@ import Axios from 'axios'
 
 import './presupuesto.styles.scss'
 
-import HorizontalList from '../../components/horizontal-list/horizontal-list.component'
+import AddPresupuesto from './add/presupuesto.add.page'
+
+
+import { Button, Table } from 'antd'
+
 
 export default class PresupuestoPage extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			presupuestos: [{ title: '', description: '' }],
+			presupuestos: [{ title: '', description: '' }], //Redux will handle this
+			newPresupuesto: false
 		}
 	}
 
@@ -17,7 +22,10 @@ export default class PresupuestoPage extends React.Component {
 		Axios.get('http://localhost:5000/presupuesto/')
             .then(presupuestos => {
                 if (presupuestos.data.length > 0) {
-                    this.setState({ presupuestos: [...presupuestos.data] }, () => {
+                    this.setState({ 
+						...this.state,
+						presupuestos: [...presupuestos.data] 
+					}, () => {
                         console.log(this.state)
                     })
                 }
@@ -25,37 +33,61 @@ export default class PresupuestoPage extends React.Component {
             .catch(err => console.log(err))
 	}
 
-
+	handleToggle = (event) => {
+		event.preventDefault()
+		this.setState({
+			...this.state,
+			newPresupuesto: !this.state.newPresupuesto
+		})
+	}
 
 	render() {
-		const tableHeader = [
+
+		const { newPresupuesto, presupuestos } = this.state
+		const dataSource = [
 			{
-				abbr: 'Pos',
-				title: 'Posicion'
+			  key: '1',
+			  name: 'Mike',
+			  age: 32,
+			  address: '10 Downing Street',
 			},
 			{
-				abbr: '',
-				title: 'Titulo'
+			  key: '2',
+			  name: 'John',
+			  age: 42,
+			  address: '10 Downing Street',
 			},
-			{
-				abbr: '',
-				title: 'Cliente'
-			},
-			{
-				title: 'Monto'
-			}
-		]
-        return (
-			<div className="presupuesto-page container">
-				<div className="columns is-vcentered">
-					<h2 className="column is-size-2">Ultimos presupuestos</h2>
-					<div className="column is-2 has-text-right">
-						<button className="button is-primary is-small" onClick={this.handleToggle}>NUEVO PRESUPUESTO</button>
+		  ];
+		  
+		  const columns = [];
+
+		presupuestos.map((presupuesto, key) => {
+			Object.getOwnPropertyNames(presupuesto).map(elem => 
+				columns.push({
+					title: elem,
+					dataIndex: elem,
+					key: elem
+				})
+			)
+			
+		})
+
+		if (newPresupuesto) {
+			return (
+				<AddPresupuesto handleToggle={this.handleToggle} />
+			)
+		} else {
+			return (
+				<div className="presupuesto-page container py-2">
+					<div className="flex-between-center py-1">
+						<h2 className="st-h2">Ultimos presupuestos</h2>
+						<Button type="primary" icon="plus" onClick={this.handleToggle}/>
 					</div>
+					
+					<Table dataSource={dataSource} columns={columns} />;
 				</div>
-				<HorizontalList data={this.state.presupuestos} tableHeader={tableHeader} tableContent={this.state.presupuestos}/>
-                
-			</div>
-		)
+			)
+		}
+
 	}
 }

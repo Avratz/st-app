@@ -13,17 +13,20 @@ import PresupuestoPage from './pages/presupuesto/presupuesto.page'
 import Navbar from './components/navbar/navbar.component'
 import Footer from './components/footer/footer.component'
 
+import { Layout } from 'antd'
 
 function App() {
   return (
-    <div className="App container-fluid">
-      <Navbar/>
-      <Switch>
-        <Route exact component={LoginPage} path='/'/>
-        <Route exact component={PresupuestoPage} path='/presupuestos'/>
-        <Route exact component={HomePage} path='/home'/>
-      </Switch> 
-      <Footer/>
+    <div className="App">
+      <Layout>
+        <Navbar/>
+        <Switch>
+          <Route exact component={LoginPage} path='/'/>
+          <Route exact component={PresupuestoPage} path='/presupuestos'/>
+          <Route exact component={HomePage} path='/home'/>
+        </Switch> 
+        <Footer/>
+      </Layout>
     </div>
   );
 }
