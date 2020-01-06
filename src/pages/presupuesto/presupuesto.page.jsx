@@ -5,35 +5,31 @@ import './presupuesto.styles.scss'
 
 import AddPresupuesto from './add/presupuesto.add.page'
 
-
 import { Button, Table } from 'antd'
-
 
 export default class PresupuestoPage extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			presupuestos: [{ title: '', description: '' }], //Redux will handle this
+			presupuestos: [{ title: '', description: '', key: '' }], //Redux will handle this
 			newPresupuesto: false
 		}
 	}
 
 	componentDidMount() {
 		Axios.get('http://localhost:5000/presupuesto/')
-            .then(presupuestos => {
-                if (presupuestos.data.length > 0) {
-                    this.setState({ 
+			.then(presupuestos => {
+				if (presupuestos.data.length > 0) {
+					this.setState({
 						...this.state,
-						presupuestos: [...presupuestos.data] 
-					}, () => {
-                        console.log(this.state)
-                    })
-                }
-            })
-            .catch(err => console.log(err))
+						presupuestos: [...presupuestos.data]
+					})
+				}
+			})
+			.catch(err => console.error(err))
 	}
 
-	handleToggle = (event) => {
+	handleToggle = event => {
 		event.preventDefault()
 		this.setState({
 			...this.state,
@@ -42,52 +38,52 @@ export default class PresupuestoPage extends React.Component {
 	}
 
 	render() {
-
 		const { newPresupuesto, presupuestos } = this.state
-		const dataSource = [
-			{
-			  key: '1',
-			  name: 'Mike',
-			  age: 32,
-			  address: '10 Downing Street',
-			},
-			{
-			  key: '2',
-			  name: 'John',
-			  age: 42,
-			  address: '10 Downing Street',
-			},
-		  ];
-		  
-		  const columns = [];
 
-		presupuestos.map((presupuesto, key) => {
-			Object.getOwnPropertyNames(presupuesto).map(elem => 
+		const columns = []
+
+		Object.getOwnPropertyNames(presupuestos[0]).map(key => {
+			if (
+				key !== '_id' &&
+				key !== 'createdAt' &&
+				key !== 'updatedAt' &&
+				key !== '__v' &&
+				key !== 'key'
+			) {
 				columns.push({
-					title: elem,
-					dataIndex: elem,
-					key: elem
+					title: key,
+					dataIndex: key,
+					key: key
 				})
-			)
-			
+			}
+			return null
+		})
+
+		columns.push({
+			title: 'Opciones',
+			key: 'opciones',
+			render: () => {
+				return (
+					<>
+						<Button type="primary" icon="edit" />{' '}
+						<Button type="danger" icon="delete" />
+					</>
+				)
+			}
 		})
 
 		if (newPresupuesto) {
-			return (
-				<AddPresupuesto handleToggle={this.handleToggle} />
-			)
+			return <AddPresupuesto handleToggle={this.handleToggle} />
 		} else {
 			return (
 				<div className="presupuesto-page container py-2">
 					<div className="flex-between-center py-1">
 						<h2 className="st-h2">Ultimos presupuestos</h2>
-						<Button type="primary" icon="plus" onClick={this.handleToggle}/>
+						<Button type="primary" icon="plus" onClick={this.handleToggle} />
 					</div>
-					
-					<Table dataSource={dataSource} columns={columns} />;
+					<Table dataSource={presupuestos} columns={columns} />;
 				</div>
 			)
 		}
-
 	}
 }
